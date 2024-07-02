@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pemesanan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Form Pemesanan</h2>
+            <form action="#" method="POST">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Nama</label>
+                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nama Anda" required>
+                </div>
+                <div class="mb-4">
+                    <label for="address" class="block text-gray-700">Alamat</label>
+                    <div class="flex">
+                        <input type="text" id="address" name="address" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Alamat Anda" required>
+                        <button type="button" id="update-map-btn" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Update Map</button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="map" class="block text-gray-700">Peta</label>
+                    <div id="map" class="w-full h-64 border rounded-lg"></div>
+                </div>
+                <div class="mb-4 hidden" id="coordinates-container">
+                    <label class="block text-gray-700">Koordinat</label>
+                    <p id="coordinates" class="px-4 py-2 border rounded-lg bg-gray-100"></p>
+                </div>
+                <div class="mb-4">
+                    <label for="payment-type" class="block text-gray-700">Tipe Pembayaran</label>
+                    <select id="payment-type" name="payment-type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <option value="offline">Offline</option>
+                        <option value="online">Online</option>
+                    </select>
+                </div>
+                <div id="payment-proof-container" class="mb-4 hidden">
+                    <label for="payment" class="block text-gray-700">Upload Bukti Pembayaran</label>
+                    <input type="file" id="payment" name="payment" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize map using Leaflet
+        var map = L.map('map').setView([-6.1754, 106.8272], 13); // Coordinate for Jakarta
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        var marker; 
+
+        // Function to update map based on address
+        function updateMap(address) {
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var lat = data[0].lat;
+                        var lon = data[0].lon;
+                        var coordinatesContainer = document.getElementById('coordinates-container');
+                        var coordinates = document.getElementById('coordinates');
+
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
+
+                        marker = L.marker([lat, lon]).addTo(map);
+                        map.setView([lat, lon], 13);
+
+                        coordinatesContainer.classList.remove('hidden');
+                        coordinates.textContent = `Latitude: ${lat}, Longitude: ${lon}`;
+                    } else {
+                        alert('Alamat tidak ditemukan');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Event listener for update map button
+        document.getElementById('update-map-btn').addEventListener('click', function() {
+            var address = document.getElementById('address').value;
+            if (address) {
+                updateMap(address);
+            }
+        });
+
+        // Show/hide payment proof input based on payment type selection
+        const paymentTypeSelect = document.getElementById('payment-type');
+        const paymentProofContainer = document.getElementById('payment-proof-container');
+
+        paymentTypeSelect.addEventListener('change', function() {
+            if (this.value === 'online') {
+                paymentProofContainer.classList.remove('hidden');
+            } else {
+                paymentProofContainer.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

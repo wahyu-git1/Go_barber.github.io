@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="image/logosponsor/gobarberblack.png" type="image/png">
+</head>
+<style>
+    @keyframes float {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .floating {
+        animation: float 3s ease-in-out infinite;
+    }
+
+
+    #navbar {
+        background-color: rgba(255, 255, 255, 0.5);
+        /* Transparansi */
+        backdrop-filter: blur(10px);
+        /* Blur */
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Tambahkan gaya untuk navbar saat menggulir */
+    #navbar.scrolled {
+        background-color: rgba(255, 255, 255, 0.8);
+        /* Lebih sedikit transparansi saat menggulir */
+    }
+
+
+    @keyframes moveRight {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    @keyframes moveLeft {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .move-right {
+        animation: moveRight 20s linear infinite;
+    }
+
+    .move-left {
+        animation: moveLeft 20s linear infinite;
+    }
+</style>
+
+<body >
+    <header class="duration-700 z-50 sticky top-0 bg-white" id="navbar">
+        <!-- Navbar -->
+        <nav class="w-11/12 px-2 mx-auto py-2">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo -->
+                <div class="">
+                    <img src="image/logo black.png" alt="" class="w-20 top-0">
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="toggleMenu" class="lg:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation Links -->
+                <div id="navLinks" class="hidden lg:flex space-x-11 font-semibold text-lg font-raleway pb-2">
+                    <a href="#" class="hover:text-teal-500 py-1 ">Home</a>
+                    <a href="gallery.html" class="hover:text-teal-500 py-1 ">Gallery</a>
+                    <a href="about.html" class="hover:text-teal-500 py-1 ">About</a>
+                    <a href="review.html" class="hover:text-teal-500 py-1 ">Review</a>
+                    <a href="form_pemesanan.html" class="hover:text-teal-500 py-1 ">Pemesanan</a>
+                    <a href="login.html" <button type="button"
+                        class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Login</button></a>
+                </div>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+    class="lg:hidden fixed inset-0 bg-black bg-opacity-100 backdrop-blur-lg hidden w-screen h-screen px-2">
+    <div class="flex justify-end p-4">
+        <button id="closeMenu" class="text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                </path>
+            </svg>
+        </button>
+    </div>
+    <div class="flex flex-col items-center font-semibold text-lg font-raleway">
+        <a href="index.html" class="text-white my-4">Home</a>
+        <a href="gallery.html" class="text-white my-4">Gallery</a>
+        <a href="about.html" class="text-white my-4">About</a>
+        <a href="review.html" class="text-white my-4">Review</a>
+        <a href="form_pemesanan.html" class="text-white my-4">Pemesanan</a>
+        <a href="login.html" class="text-white my-4">Login</a>
+    </div>
+</div>
+
+        <script>
+            // Toggle Mobile Menu
+            document
+                .getElementById("toggleMenu")
+                .addEventListener("click", function () {
+                    document.getElementById("mobileMenu").classList.toggle("hidden");
+                });
+
+            // Close Mobile Menu
+            document
+                .getElementById("closeMenu")
+                .addEventListener("click", function () {
+                    document.getElementById("mobileMenu").classList.add("hidden");
+                });
+
+            // Add scroll listener to update header styling
+            function updateHeaderBackground() {
+                var navbar = document.getElementById("navbar");
+                var screenHeight = window.innerHeight;
+
+                // Tambahkan atau hapus kelas 'bg-solid' berdasarkan posisi scroll
+                if (window.scrollY > screenHeight) {
+                    navbar.classList.add("bg-[#D3E0EA]");
+                } else {
+                    navbar.classList.remove("bg-[#D3E0EA]");
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", updateHeaderBackground);
+            window.addEventListener("scroll", updateHeaderBackground);
+        </script>
+    </header>
+
+    <!-- AREA CONTENCT -->
+    <main class="flex items-center justify-center min-h-screen py-10">
+        <div class="flex flex-col md:flex-row max-w-screen-xl mx-auto p-6">
+            <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-2 text-black-500">
+                    Layanan
+                    <span
+                        style="background: linear-gradient(to right, #800080, #ee82ee); -webkit-background-clip: text; color: transparent;">
+                        Barbershop
+                    </span>
+                    <br>Berbasis Homeservice
+                </h1>
+                <br><br>
+                <p class="text-lg mb-2">Go-Barber mempermudah urusan cukur rambut Anda dengan sistem pemesanan dan pembayaran online yang praktis dan mudah. 
+                    Tidak perlu lagi membuang waktu di perjalanan atau mengantri di barber shop. Dengan Go-Barber, 
+                    Anda cukup memilih layanan yang diinginkan melalui aplikasi atau situs web kami, jadwalkan waktu yang sesuai dengan 
+                    aktivitas Anda, dan kami akan datang ke tempat Anda.
+                </p>
+                <br><br>
+                <a href="#" class="inline-block">
+                    <button type="button"
+                            class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Login Untuk Booking
+                    </button>
+                </a>
+            </div>
+            <div class="w-full md:w-1/2 flex items-center justify-center">
+                <img src="image/Group 34.png" alt="Tujuan Terbaik" class="w-70 top-0 floating">
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- logo sponsor -->
+    <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold mb-5">Sponsorship dan Media Partner</h1>
+        <p class="text-lg mb-10 max-w-lg mx-auto">
+            We pride ourselves on our commitment to quality and customer satisfaction. We strive to exceed our client's
+            expectations at every step of the way, delivering reliable, sustainable, and loveable software solutions.
+        </p>
+    </div>
+    <div class="space-y-10">
+        <div class="overflow-hidden">
+            <div class="flex space-x-10 justify-center items-center move-right">
+                <img src="image/logosponsor/gobarberblack.png" alt="Telkom Indonesia" class="h-36 w-auto ">
+                <img src="image/logosponsor/himapsi.png" alt="Astra" class="h-36 w-auto">
+                <img src="image/logosponsor/hmti.png" alt="Google" class="h-36 w-auto">
+                <img src="image/logosponsor/himatif.png" alt="Gojek" class="h-36 w-auto">
+                <img src="image/logosponsor/utm.png" alt="OVO" class="h-36 w-auto">
+                <img src="image/logosponsor/pppm.png" alt="OVO" class="h-36 w-auto">
+            </div>
+        </div>
+        <div class="overflow-hidden">
+            <div class="flex space-x-10 justify-center items-center move-left">
+                <img src="image/logosponsor/maduratech.png" alt="Acer" class="h-36 w-auto">
+                <img src="image/logosponsor/p2mw.png" alt="PLN" class="h-36 w-auto">
+                <img src="image/logosponsor/simbelmawa.png" alt="BPJS" class="h-36 w-auto">
+                <img src="image/logosponsor/kemendikbut.png" alt="ParagonCorp" class="h-36 w-auto">
+                <img src="image/logosponsor/kampusmerdeka.png" alt="Pegadaian" class="h-36 w-auto">
+                <img src="image/logosponsor/merdekabelaja.png" alt="Pegadaian" class="h-36 w-auto">
+                <img src="image/logosponsor/bsi.webp" alt="Pegadaian" class="h-24 w-auto">
+            </div>
+        </div>
+    </div><br><br><br><br>
+
+
+    <!-- yyyyyy -->
+    <!-- Section dengan latar belakang ungu -->
+    <section class="bg-gradient-to-r from-purple-700 via-purple-800 to-purple-900 text-white py-12">
+        <!-- Bagian 1: Modern Engineering Framework -->
+        <div class="text-center">
+            <div class="flex flex-col items-center">
+                <h2 class="text-6xl font-bold mb-4">Kenapa Harus GO BARBER?</h2>
+                <p class="max-w-4xl mx-auto px-6 text-lg leading-relaxed">
+                    Nikmati pengalaman potong rambut tanpa ribet dengan Go Barber!
+                    Kini, Anda tidak perlu lagi menghabiskan waktu untuk antri di barbershop atau menghadapi kemacetan
+                    di jalan.
+                    Dengan layanan homeservice kami, barber profesional akan datang langsung ke rumah Anda, memberikan
+                    layanan
+                    berkualitas yang nyaman dan praktis. Pemesanan dan pembayaran pun dapat dilakukan secara digital
+                    melalui aplikasi
+                    atau website kami, membuat seluruh proses menjadi lebih mudah dan efisien. Temukan kenyamanan dan
+                    kemudahan layanan
+                    barbershop modern hanya di Go Barber – solusi potong rambut masa kini yang memprioritaskan
+                    kenyamanan Anda!
+                </p>
+            </div>
+            <div class="flex justify-center space-x-8 mt-8">
+                <img src="image/fitur/1.png" alt="Telkom Indonesia"
+                    class="h-24 hover:scale-105 transition-transform duration-300">
+                <img src="image/fitur/2.png" alt="Astra" class="h-24 hover:scale-105 transition-transform duration-300">
+                <img src="image/fitur/3.png" alt="BPJS" class="h-24 hover:scale-105 transition-transform duration-300">
+                <img src="image/fitur/4.png" alt="Balai Sertifikasi Elektronik"
+                    class="h-24 hover:scale-105 transition-transform duration-300">
+                <img src="image/fitur/5.png" alt="Erajaya"
+                    class="h-24 hover:scale-105 transition-transform duration-300">
+            </div>
+        </div>
+        <blockquote class="text-center mt-12 text-2xl italic opacity-75">
+            “ Kami tidak hanya membangun aplikasi. Kami menetapkan standar untuk pembangunan aplikasi “
+        </blockquote>
+    </section>
+
+    </div>
+
+    <!--  -->
+
+    <!-- AREA CONTENCT -->
+
+    <footer class="bg-[#F5FFF6] mt-10">
+        <div class="w-10/12 px-2 mx-auto py-2">
+            <div class="py-10 text-center md:text-left">
+                <div class="flex flex-col lg:flex-row justify-between">
+                    <div class="basis-1/4 text-left">
+                        <h6 class="mb-4 flex items-center justify-center font-semibold uppercase md:justify-start">
+                            <img src="image/logo.png" alt="" class="w-36 top-0">
+                        </h6>
+                        <p>
+                            Anda pesan kami datang
+                        </p>
+                    </div>
+                    <div class="flex flex-row justify-between basis-1/2 text-left flex-wrap">
+                        <div class="mt-6 basis-1/4">
+                            <h6 class="mb-4 flex font-semibold uppercase justify-start">
+                                Layanan
+                            </h6>
+                            <p class="mb-4">
+                                <a href="#!" class="">Homeservice
+                            </p>
+                            <p class="mb-4">
+                                <a href="#!" class="">Mitra</a>
+                            </p>
+                        </div>
+                        <div class="mt-6 basis-1/4">
+                            <h6 class="mb-4 flex font-semibold uppercase justify-start">
+                                Help
+                            </h6>
+                            <p class="mb-4">
+                                <a href="#!" class="">Help/FAQ</a>
+                            </p>
+                            <p class="mb-4">
+                                <a href="#!" class="">About</a>
+                            </p>
+                        </div>
+                        <!-- Contact section -->
+                        <div class="mt-6 basis-1/2">
+                            <h6 class="mb-4 flex font-semibold uppercase justify-start">
+                                Contact
+                            </h6>
+                            <p class="mb-4 flex items-center justify-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="mr-3 h-5 w-5">
+                                    <path
+                                        d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                                    <path
+                                        d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                                </svg>
+                                Jl. Kusuma Bangsa, Banyuajuh, Kamal Bangkalan
+                            </p>
+
+                            <p class="mb-4 flex items-center justify-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="mr-3 h-5 w-5">
+                                    <path
+                                        d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+                                    <path
+                                        d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+                                </svg>
+                                aanadisetiyawan9@gmail.com
+                            </p>
+                            <p class="mb-4 flex items-center justify-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="mr-3 h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                087816979024
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Useful links section -->
+                </div>
+            </div>
+        </div>
+        </f </body>
+
+</html>
